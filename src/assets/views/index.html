@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dash</title>
+    <link id="themeStyle" rel="stylesheet" href="../css/light-theme.css">
+</head>
+
+<body>
+    <a id="themeBtn"><img src="../img/light_mode.svg" id="themeImg" alt="light-theme"></a>
+    <form id="searchForm">
+        <div class="mb-3"> <label for="companyInput" class="form-label">Simbolo da empresa:</label> <input type="text"
+                class="form-control" id="companyInput" placeholder=" Digite o Simbolo da empresa">
+        </div>
+        <div class="mb-3"> <label for="timeRange">Intervalo de tempo:</label> <select id="timeRange"
+                class="form-select">
+                <option value="">Selecione o intervalo</option>
+                <option value="0d">Desempenho agora</option>
+                <option value="1d">Desempenho diário</option>
+                <option value="7d">Desempenho nos últimos 7 dias</option>
+                <option value="30d">Desempenho no último mês</option>
+            </select> </div>
+        <div class="mb-3"> <label for="typeChart">Tipo de gráfico:</label> <select id="typeChart" class="form-select">
+                <option value="">Selecione o tipo de gráfico</option>
+                <option value="line">Gráfico de linha</option>
+                <option value="bar">Gráfico de barras</option>
+            </select> </div>
+        <button type="submit" id="searchBtn" class="btn btn-primary">Pesquisar</button>
+    </form>
+
+    <div class="stock-info ocultar " id="stock-info">
+        <h2 id="stock-name">AAPL</h2>
+        <div class="price-info">
+            <p id="p_current_price">Preço Atual: <span id="current-price"></span></p>
+            <p id="p_change">Variação: <span id="change" class="positive"></span> (<span id="change-percent"
+                    class="positive"></span>)</p>
+        </div>
+        <div class="additional-info">
+            <p>Abertura: <span id="open-price"></span></p>
+            <p id="p_previous_close">Fechamento Anterior: <span id="previous-close"></span></p>
+            <p>Máximo do Dia: <span id="high"></span></p>
+            <p>Mínimo do Dia: <span id="low"></span></p>
+            <p>Volume: <span id="volume"></span></p>
+            <p id="p_latest_day">Último Dia de Negociação: <span id="latest-day"></span></p>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="stockChart" class="chart ocultar" width="400" height="200"></canvas>
+        <canvas id="weeklyChart" class="chart ocultar" width="400" height="200"></canvas>
+        <canvas id="monthlyChart" class="chart ocultar" width="400" height="200"></canvas>
+    </div>
+
+    <script type="module" src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+
+</html>

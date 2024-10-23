@@ -1,0 +1,200 @@
+@charset "UTF-8";
+
+html,
+body {
+    background-color: #eee;
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.mb-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #555;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 14px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+.stock-info,
+.price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 25px;
+    padding: 25px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.stock-info:hover,
+.price-info:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#themeBtn {
+    position: fixed;
+    top: 0;
+    right: 25px;
+    display: inline-block;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #cccccc51;
+    border-radius: 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.chart-container {
+    display: flex;
+    /* Isso fará os gráficos ficarem um ao lado do outro se necessário */
+    flex-direction: column;
+    /* Garante que os gráficos estejam empilhados verticalmente */
+    align-items: center;
+    /* Centraliza os gráficos */
+    margin-top: 20px;
+    /* Espaço acima do gráfico */
+
+}
+
+.chart {
+    width: 100%;
+    /* Ajusta para a largura total do contêiner pai */
+    height: 400px;
+    /* Ajuste a altura conforme necessário */
+    margin: 10px 0;
+    /* Espaçamento em cima e embaixo dos gráficos */
+}
+
+.ocultar {
+    display: none;
+}
+
+
+h2{
+    text-align: center;
+    border: 2px solid #333;
+    padding: 25px;
+    border-radius: 50px;
+}
+
+span {
+    font-weight: bold;
+    color: rgb(52, 214, 52);
+}
+
+@media (max-width: 767px) {
+
+    html,
+    body {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+        box-sizing: border-box;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f4f4f9;
+        overflow-y: auto;
+    }
+
+    form {
+        max-width: 100%;
+        padding: 20px;
+        margin-bottom: 5px;
+        margin-top: 20px;
+        background-color: #fff;
+        box-sizing: border-box;
+    }
+
+    .stock-info,
+    .price-info {
+        margin: 0;
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .chart-container {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .chart {
+        width: 1200px;
+        height: auto;
+        margin: 20px 0;
+    }
+
+    h2{
+        text-align: center;
+        border: 2px solid #333;
+        padding: 25px;
+        border-radius: 50px;
+    }
+}
