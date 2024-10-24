@@ -1,7 +1,6 @@
 import { TIME_SERIES_DAILY, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY } from "../api/financeAPI.js";
 
 // Função para buscar dados e renderizar gráfico semanal
-// Função para buscar dados e renderizar gráfico semanal
 export async function fetchAndRenderWeeklyChart(symbol, type) {
     showSpinner(); // Mostra o spinner ao iniciar a requisição
     try {
@@ -79,9 +78,9 @@ export async function fetchAndRenderMonthlyChart(symbol, type) {
     showSpinner(); // Mostra o spinner ao iniciar a requisição
     try {
         const stockData = await TIME_SERIES_MONTHLY(symbol);
-        const timeSeries = stockData["Monthly Time Series"];
         console.log('Dados mensais:', stockData);
 
+        const timeSeries = stockData["Monthly Time Series"];
         if (!timeSeries) {
             console.error("Dados de séries temporais mensais não encontrados.");
             return;
@@ -147,6 +146,7 @@ export async function fetchAndRenderMonthlyChart(symbol, type) {
     }
 }
 
+// Função para mostrar o spinner
 export function showSpinner() {
     const spinner = document.getElementById('spinner');
     if (spinner) {
@@ -154,10 +154,10 @@ export function showSpinner() {
     }
 }
 
+// Função para esconder o spinner
 export function hideSpinner() {
     const spinner = document.getElementById('spinner');
     if (spinner) {
         spinner.style.display = 'none'; // Esconde o spinner
     }
 }
-
