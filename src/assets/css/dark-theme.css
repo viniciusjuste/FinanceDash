@@ -115,6 +115,7 @@ button:hover {
 }
 
 .chart {
+    display: block;
     width: 100%;
     height: 400px;
     margin: 10px 0;
@@ -136,6 +137,21 @@ span {
     font-weight: bold;
     color: rgb(52, 214, 52);
 }
+
+.loading-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 
 @media (max-width: 767px) {
     html,

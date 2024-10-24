@@ -1,7 +1,6 @@
-import { getStockPrice } from "../api/financeAPI.js";
+import { getStockPrice, TIME_SERIES_DAILY, TIME_SERIES_MONTHLY, TIME_SERIES_WEEKLY } from "../api/financeAPI.js";
 import { toggleTheme } from "../components/theme.js";
-import { TIME_SERIES_DAILY } from "../api/financeAPI.js";
-import { fetchAndRenderMonthlyChart, fetchAndRenderWeeklyChart } from "../components/chart.js";
+import { fetchAndRenderMonthlyChart, fetchAndRenderWeeklyChart, showSpinner, hideSpinner } from "../components/chart.js";
 
 const companyInput = document.getElementById('companyInput');
 const searchBtn = document.getElementById('searchBtn');
@@ -23,7 +22,8 @@ const p_latest_day = document.getElementById('p_latest_day');
 const timeRange = document.getElementById('timeRange');
 const stockInfo = document.getElementById('stock-info');
 const typeChart = document.getElementById('typeChart');
-
+const weeklyChart = document.getElementById('weeklyChart');
+const monthlyChart = document.getElementById('monthlyChart');
 
 window.onload = () => {
     const body = document.body;
@@ -34,27 +34,19 @@ window.onload = () => {
     if (savedTheme) {
         body.classList.add(savedTheme);
         themeStyle.setAttribute('href', savedTheme === 'dark-theme' ? '../css/dark-theme.css' : '../css/light-theme.css');
-
-        // Atualiza a imagem do botão de tema
-        if (savedTheme === 'dark-theme') {
-            themeImg.setAttribute('src', '../img/dark_mode.svg');
-            themeImg.setAttribute('alt', 'dark-theme');
-        } else {
-            themeImg.setAttribute('src', '../img/light_mode.svg');
-            themeImg.setAttribute('alt', 'light-theme');
-        }
+        themeImg.setAttribute('src', savedTheme === 'dark-theme' ? '../img/dark_mode.svg' : '../img/light_mode.svg');
+        themeImg.setAttribute('alt', savedTheme === 'dark-theme' ? 'dark-theme' : 'light-theme');
     } else {
-        body.classList.add('light-theme'); // Define o tema padrão se não houver tema salvo
+        body.classList.add('light-theme');
         themeStyle.setAttribute('href', '../css/light-theme.css');
-        themeImg.setAttribute('src', '../img/light_mode.svg'); // Define a imagem padrão
+        themeImg.setAttribute('src', '../img/light_mode.svg');
         themeImg.setAttribute('alt', 'light-theme');
     }
-}
+};
 
 async function fetchStockData(symbol) {
     try {
         const stockData = await getStockPrice(symbol);
-
         console.log(stockData);
 
         stockName.innerHTML = `${stockData['Global Quote']['01. symbol']}`;
@@ -78,7 +70,6 @@ async function fetchStockData(symbol) {
 async function fetchStockDataDaily(symbol) {
     try {
         const stockData = await TIME_SERIES_DAILY(symbol);
-
         console.log(stockData);
 
         if (stockData) {
@@ -87,11 +78,7 @@ async function fetchStockDataDaily(symbol) {
             stockName.innerHTML = 'Erro ao buscar dados da empresa. Verifique o símbolo e tente novamente.';
         }
 
-
-        // Acessa o objeto Time Series (Daily)
         const timeSeries = stockData["Time Series (Daily)"];
-
-        // Pega a data mais recente disponível
         const latestDate = Object.keys(timeSeries)[0];
 
         openPrice.innerHTML = `$${parseFloat(timeSeries[latestDate]["1. open"]).toFixed(2)}`;
@@ -110,22 +97,19 @@ async function fetchStockDataDaily(symbol) {
     }
 }
 
-// Função para ocultar o gráfico (esconde o canvas)
 function hideChart(chartId) {
     const chartElement = document.getElementById(chartId);
     if (chartElement) {
-        chartElement.style.display = 'none'; // Esconde o elemento do gráfico
+        chartElement.style.display = 'none';
     }
 }
 
-// Função para exibir o gráfico (mostra o canvas)
 function showChart(chartId) {
     const chartElement = document.getElementById(chartId);
     if (chartElement) {
-        chartElement.style.display = 'block'; // Exibe o elemento do gráfico
+        chartElement.style.display = 'block';
     }
 }
-
 
 searchBtn.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -137,12 +121,15 @@ searchBtn.addEventListener('click', async (event) => {
         return;
     }
 
-    // Esconde inicialmente todas as áreas de gráfico
+    // Mostrar o spinner enquanto busca os dados
+    showSpinner();
+
+    // Esconder os gráficos enquanto carrega
     hideChart('weeklyChart');
     hideChart('monthlyChart');
-    stockInfo.classList.add('ocultar'); // Esconde a seção de informações da empresa
+    stockInfo.classList.add('ocultar');
 
-    // Lógica para buscar dados e exibir gráficos conforme o intervalo de tempo selecionado
+    // Lógica para exibir os dados de acordo com o intervalo selecionado
     if (timeRange.value === '0d') {
         await fetchStockData(symbol);
         stockInfo.classList.remove('ocultar');
@@ -153,24 +140,27 @@ searchBtn.addEventListener('click', async (event) => {
         type = typeChart.value;
         if (type) {
             await fetchAndRenderWeeklyChart(symbol, type);
-            showChart('weeklyChart'); // Mostra o gráfico semanal
+            showChart('weeklyChart');
         }
     } else if (timeRange.value === '30d') {
         type = typeChart.value;
         if (type) {
             await fetchAndRenderMonthlyChart(symbol, type);
-            showChart('monthlyChart'); // Mostra o gráfico mensal
+            showChart('monthlyChart');
         }
     }
 
-    // Exibe alerta caso nenhum intervalo ou tipo de gráfico tenha sido selecionado
+    // Esconder o spinner quando os dados estiverem carregados
+    hideSpinner();
+
+    // Verificações finais para garantir seleção correta
     if (timeRange.value === '' || typeChart.value === '') {
         if (timeRange.value !== '0d' && timeRange.value !== '1d') {
             alert('Por favor, selecione o intervalo e o tipo de gráfico');
         }
     }
 
-    // Limpa os campos de entrada após o clique
+    // Limpar os campos após a pesquisa
     companyInput.value = '';
     timeRange.value = '';
     typeChart.value = '';
@@ -180,20 +170,16 @@ searchBtn.addEventListener('click', async (event) => {
 const themeBtn = document.getElementById('themeBtn');
 themeBtn.addEventListener('click', () => {
     toggleTheme();
-})
+});
 
 function toggleChartSelect() {
     if (timeRange.value === '0d' || timeRange.value === '1d') {
-        // Desativa o select de gráfico se o intervalo for 'agora' ou '1 dia'
         typeChart.setAttribute('disabled', true);
         typeChart.style.cursor = 'not-allowed';
     } else {
-        // Ativa o select de gráfico para outros intervalos
         typeChart.removeAttribute('disabled');
         typeChart.style.cursor = 'default';
     }
 }
 
 timeRange.addEventListener('change', toggleChartSelect);
-
-
