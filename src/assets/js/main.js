@@ -100,16 +100,17 @@ async function fetchStockDataDaily(symbol) {
 function hideChart(chartId) {
     const chartElement = document.getElementById(chartId);
     if (chartElement) {
-        chartElement.style.display = 'none';
+        chartElement.classList.add('ocultar');
     }
 }
 
 function showChart(chartId) {
     const chartElement = document.getElementById(chartId);
     if (chartElement) {
-        chartElement.style.display = 'block';
+        chartElement.classList.remove('ocultar');
     }
 }
+
 
 searchBtn.addEventListener('click', async (event) => {
     event.preventDefault();

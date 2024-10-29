@@ -121,12 +121,12 @@ button:hover {
     margin: 10px 0;
 }
 
-.ocultar{
+.ocultar {
     display: none;
 }
 
 
-h2{
+h2 {
     text-align: center;
     border: 2px solid #fff;
     padding: 25px;
@@ -148,16 +148,23 @@ span {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 
 @media (max-width: 767px) {
+
     html,
     body {
         display: flex;
-        justify-content: flex-start; /* Garante que o conteúdo comece do topo */
+        justify-content: flex-start;
+        /* Garante que o conteúdo comece do topo */
         align-items: center;
         flex-direction: column;
         padding: 10px;
@@ -165,13 +172,16 @@ span {
         margin: 0;
         width: 100%;
         height: 100%;
-        overflow-y: auto; /* Ativar rolagem se necessário */
+        overflow-y: auto;
+        /* Ativar rolagem se necessário */
     }
 
     form {
-        width: 100%; /* Garantir 100% da largura */
+        width: 100%;
+        /* Garantir 100% da largura */
         max-width: 100%;
-        margin-top: 20px; /* Reduzindo a margem superior */
+        margin-top: 20px;
+        /* Reduzindo a margem superior */
         margin-bottom: 5px;
         padding: 20px;
         background-color: #333;
@@ -202,13 +212,11 @@ span {
         margin: 20px 0;
     }
 
-    
-    h2{
+
+    h2 {
         text-align: center;
         border: 2px solid #fff;
         padding: 25px;
         border-radius: 50px;
     }
 }
-
-
