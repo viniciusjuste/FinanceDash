@@ -22,8 +22,6 @@ const p_latest_day = document.getElementById('p_latest_day');
 const timeRange = document.getElementById('timeRange');
 const stockInfo = document.getElementById('stock-info');
 const typeChart = document.getElementById('typeChart');
-const weeklyChart = document.getElementById('weeklyChart');
-const monthlyChart = document.getElementById('monthlyChart');
 
 window.onload = () => {
     const body = document.body;
@@ -55,7 +53,7 @@ async function fetchStockData(symbol) {
             console.error("Os dados do símbolo não estão disponíveis.");
             stockName.innerHTML = "Símbolo não disponível";
         }
-        
+
         currentPrice.innerHTML = `$${parseFloat(stockData['Global Quote']['05. price']).toFixed(2)}`;
         change.innerHTML = `$${parseFloat(stockData['Global Quote']['09. change']).toFixed(2)}`;
         changePercent.innerHTML = `${stockData['Global Quote']['10. change percent']}`;
