@@ -1,4 +1,4 @@
-const API_KEY = 'AX5PYG1VGJIJ8KO5';
+const API_KEY = 'VSMVQOO3QBQYEWAK';
 const BASE_URL = 'https://www.alphavantage.co/query';
 
 export async function getStockPrice(symbol) {
@@ -6,6 +6,7 @@ export async function getStockPrice(symbol) {
         const url = `${BASE_URL}?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`;
         const response = await fetch(url);
         const data = await response.json();
+        console.log(JSON.stringify(data, null, 2));
         return data;
     } catch (error) {
         console.error(error);

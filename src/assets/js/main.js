@@ -49,7 +49,13 @@ async function fetchStockData(symbol) {
         const stockData = await getStockPrice(symbol);
         console.log(stockData);
 
-        stockName.innerHTML = `${stockData['Global Quote']['01. symbol']}`;
+        if (stockData && stockData['Global Quote'] && stockData['Global Quote']['01. symbol']) {
+            stockName.innerHTML = `${stockData['Global Quote']['01. symbol']}`;
+        } else {
+            console.error("Os dados do símbolo não estão disponíveis.");
+            stockName.innerHTML = "Símbolo não disponível";
+        }
+        
         currentPrice.innerHTML = `$${parseFloat(stockData['Global Quote']['05. price']).toFixed(2)}`;
         change.innerHTML = `$${parseFloat(stockData['Global Quote']['09. change']).toFixed(2)}`;
         changePercent.innerHTML = `${stockData['Global Quote']['10. change percent']}`;
